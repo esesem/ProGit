@@ -54,4 +54,4 @@ Git은 2005년 탄생하고 나서 아직도 초기 목표를 그대로 유지�
 
 
 ## 1.3 Git 기초
-Subversion과 sub
+Subversion과 Subversion 비슷한 VCS들과 Git의 가장 큰 차이점은 데이터를 다루는 방법에 있다.
