@@ -285,7 +285,7 @@ $ git <verb> --help
 $ man git-<verb>
 ```
 
-* [Freenode IRC 서버](irc.freenode.net): #git이나 #github 채널
+* [Freenode IRC 서버](https://freenode.net): #git이나 #github 채널
 
 
 
