@@ -83,7 +83,7 @@
 
 ### 세 가지 상태
 
-> Git은 파일을 Committed, Modified, Staged 세 가지 상태로 관리한다.
+> #### Git은 파일을 Committed, Modified, Staged 세 가지 상태로 관리
 > * Committed: 데이터가 로컬 데이터베이스에 안전하게 저장됨
 > * Modified: 수정한 파일을 아직 로컬 데이터베이스에 커밋하지 않음
 > * Staged: 현재 수정한 파일을 곧 커밋할 것이라고 표시한 상태
@@ -145,13 +145,13 @@
 
 ### 소스 코드로 설치하기
 
-> 필요한 라이브러리
+> #### 필요한 라이브러리
 > * curl
 > * zlib
 > * openssl
 > * expat
 > 
-> 패키지 설치
+> #### 패키지 설치
 > ```shell
 > $ sudo yum install curl-devel gettext-devel \
 >   openssl-devel perl-devel zlib-devel
@@ -159,13 +159,13 @@
 >   libz-dev libssl-dev
 > ```
 > 
-> doc, html, info 형식의 문서를 이용하려면 아래의 의존 패키지 필요
+> #### doc, html, info 형식의 문서를 이용하려면 아래의 의존 패키지 필요
 > ```shell
 > $ sudo yum install asciidoc xmlto docbook2X
 > $ sudo apt-get install asciidoc xmlto docbook2x
 > ```
 > 
-> 컴파일하고 설치
+> #### 컴파일하고 설치
 > ```shell
 > $ tar -zxf git-2.0.0.tar.gz
 > $ cd git-2.0.0
@@ -217,7 +217,7 @@
 > color.diff=auto
 > ...
 > ```
-> 특정 Key에 대해 어떤 값을 사용하는지 확인
+> #### 특정 Key에 대해 어떤 값을 사용하는지 확인
 > ```shell
 > $ git config user.name
 > John Doe
