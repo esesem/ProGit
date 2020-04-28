@@ -11,13 +11,13 @@
 
 
 
-### 로컬 버전 관리
+### 1.1.1 로컬 버전 관리
 
 ![그림 1-1 로컬 버전 관리](https://raw.githubusercontent.com/esesem/ProGit/master/Figure/1-1.png)
 
 
 
-### 중앙집중식 버전 관리(CVCS)
+### 1.1.2 중앙집중식 버전 관리(CVCS)
 
 ![그림 1-2 중앙집중식 버전 관리(CVCS)](https://raw.githubusercontent.com/esesem/ProGit/master/Figure/1-2.png)
 
@@ -25,7 +25,7 @@
 
 
 
-### 분산 버전 관리 시스템
+### 1.1.3 분산 버전 관리 시스템
 
 ![그림 1-3 분산 버전 관리 시스템(DVCS)](https://raw.githubusercontent.com/esesem/ProGit/master/Figure/1-3.png)
 
@@ -55,7 +55,7 @@ Git은 2005년 탄생하고 나서 아직도 초기 목표를 그대로 유지�
 
 
 
-### 차이가 아니라 스냅샷
+### 1.3.1 차이가 아니라 스냅샷
 
 ![그림 1-4 각 파일에 대한 변화를 저장하는 시스템들](https://raw.githubusercontent.com/esesem/ProGit/master/Figure/1-4.png)
 
@@ -65,13 +65,13 @@ Git은 데이터를 파일 시스템 스냅샷으로 취급하고 크기가 아�
 
 
 
-### 거의 모든 명령을 로컬에서 실행
+### 1.3.2 거의 모든 명령을 로컬에서 실행
 
 프로젝트의 모든 히스토리가 로컬 디스크에 있기 때문에 모든 명령을 순식간에 실행한다.
 
 
 
-### Git의 무결성
+### 1.3.3 Git의 무결성
 
 Git은 데이터를 저장하기 전에 항상 체크섬을 구하고 그 체크섬으로 데이터를 관리한다. 체크섬 없이는 어떠한 파일이나 디렉터리도 변경할 수 없다.  
 Git은 SHA-1 해시를 사용하여 체크섬을 만든다.  
@@ -79,12 +79,12 @@ Git은 파일을 이름으로 저장하지 않고 해당 파일의 해시로 저
 
 
 
-### Git은 데이터를 추가할 뿐
+### 1.3.4 Git은 데이터를 추가할 뿐
 
 Git으로 무얼 하든 Git 데이터베이스에 데이터가 추가된다. 다른 VCS처럼 Git도 커밋하지 않으면 변경사항을 잃어버릴 수 있다. 하지만 일단 스냅샷을 커밋하고 나면 데이터를 잃어버리기 어렵다.
 
 
-### 세 가지 상태
+### 1.3.5 세 가지 상태
 
 #### Git은 파일을 Committed, Modified, Staged 세 가지 상태로 관리
 * Committed: 데이터가 로컬 데이터베이스에 안전하게 저장됨
@@ -121,7 +121,7 @@ Git을 사용하는 방법은 CLI(Command Line Interface)로 사용할 수도 �
 
 
 
-### 리눅스에 설치
+### 1.5.1 리눅스에 설치
 
 ```shell
 $ sudo yum install git
@@ -132,7 +132,7 @@ $ sudo apt-get install git
 
 
 
-### 맥에 설치
+### 1.5.2 맥에 설치
 
 * Xcode Command Line Tools
 * [http://git-scm.com/download/mac](http://git-scm.com/download/mac)
@@ -140,7 +140,7 @@ $ sudo apt-get install git
 
 
 
-### 윈도우에 설치
+### 1.5.3 윈도우에 설치
 
 * [http://git-scm.com/download/win](http://git-scm.com/download/win)
 * [https://git-for-windows.github.io](https://git-for-windows.github.io)
@@ -148,7 +148,7 @@ $ sudo apt-get install git
 
 
 
-### 소스 코드로 설치하기
+### 1.5.4 소스 코드로 설치하기
 
 #### 필요한 라이브러리
 
@@ -199,7 +199,7 @@ $ sudo make install install-doc install-html install-info
 
 
 
-### 사용자 정보
+### 1.6.1 사용자 정보
 
 #### 사용자 이름과 이메일 주소 설정
 
@@ -211,7 +211,7 @@ $ git config --global user.email "johndoe@example.com"
 
 
 
-### 편집기
+### 1.6.2 편집기
 
 ```shell
 $ git config --global core.editor emacs
@@ -219,7 +219,7 @@ $ git config --global core.editor emacs
 
 
 
-### 설정 확인
+### 1.6.3 설정 확인
 ```shell
 $ git config --list
 user.name=John Doe
