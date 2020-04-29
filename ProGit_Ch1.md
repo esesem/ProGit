@@ -5,6 +5,7 @@
 
 ## 1.1 버전 관리란?
 
+
 #### VCS(Version Control System, 버전 관리 시스템)
 
 파일 변화를 시간에 따라 기록했다가 나중에 특정 시점의 버전을 다시 꺼내올 수 있는 시스템
@@ -87,7 +88,9 @@ Git으로 무얼 하든 Git 데이터베이스에 데이터가 추가된다. 다
 
 ### 1.3.5 세 가지 상태
 
+
 #### Git은 파일을 Committed, Modified, Staged 세 가지 상태로 관리
+
 * Committed: 데이터가 로컬 데이터베이스에 안전하게 저장됨
 * Modified: 수정한 파일을 아직 로컬 데이터베이스에 커밋하지 않음
 * Staged: 현재 수정한 파일을 곧 커밋할 것이라고 표시한 상태
@@ -97,6 +100,7 @@ Git으로 무얼 하든 Git 데이터베이스에 데이터가 추가된다. 다
 * Git 디렉터리: Git이 프로젝트의 메타데이터와 객체 데이터베이스를 저장하는 곳, 다른 컴퓨터에 있는 저장소를 Clone할 때 Git 디렉터리가 만들어짐
 * 워킹 디렉터리: 프로젝트의 특정 버전을 Checkout한 것, Git 디렉터리는 지금 작업하는 디스크에 있고 그 디렉터리 안에 압축된 데이터베이스에서 파일을 가져와서 워킹 디렉터리를 만듦
 * Staging Area: Git 디렉터리에 있음, 단순한 파일이고 곧 커밋할 파일에 대한 정보를 저장
+
 
 #### Git으로 하는 일
 
@@ -151,12 +155,14 @@ $ sudo apt-get install git
 
 ### 1.5.4 소스 코드로 설치하기
 
+
 #### 필요한 라이브러리
 
 * curl
 * zlib
 * openssl
 * expat
+
 
 #### 패키지 설치
 
@@ -167,12 +173,14 @@ $ sudo apt-get install libcurl4-gnutls-dev libexpat1-dev gettext \
   libz-dev libssl-dev
 ```
 
+
 #### doc, html, info 형식의 문서를 이용하려면 아래의 의존 패키지 필요
 
 ```shell
 $ sudo yum install asciidoc xmlto docbook2X
 $ sudo apt-get install asciidoc xmlto docbook2x
 ```
+
 
 #### 컴파일하고 설치
 
@@ -190,6 +198,7 @@ $ sudo make install install-doc install-html install-info
 
 ## 1.6 Git 최초 설정
 
+
 #### git config 도구
 
 각 설정은 역순으로 우선시 됨
@@ -201,6 +210,7 @@ $ sudo make install install-doc install-html install-info
 
 
 ### 1.6.1 사용자 정보
+
 
 #### 사용자 이름과 이메일 주소 설정
 
@@ -221,6 +231,7 @@ $ git config --global core.editor emacs
 
 
 ### 1.6.3 설정 확인
+
 ```shell
 $ git config --list
 user.name=John Doe
@@ -231,6 +242,7 @@ color.interactive=auto
 color.diff=auto
 ...
 ```
+
 
 #### 특정 Key에 대해 어떤 값을 사용하는지 확인
 
