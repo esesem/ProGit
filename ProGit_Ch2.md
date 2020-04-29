@@ -7,38 +7,55 @@
 
 
 
-### 기존 디렉터리를 Git 저장소로 만들기
+### 2.1.1 기존 디렉터리를 Git 저장소로 만들기
 
-> #### 프로젝트의 디렉터리로 이동
-> ```shell
-> $ git init
-> ```
-> * `.git`이라는 하위 디렉터리를 만듦
-> * `.git` 디렉터리에는 저장소에 필요한 뼈대 파일(skeleton)이 들어 있음
->
-> #### 파일 버전 관리 시작: 파일을 추가하고 커밋
-> ```shell
-> $ git add *.c
-> $ git add LICENSE
-> $ git commit -m 'initial project version'
-> ```
+```shell
+$ git init
+```
+
+* `.git`이라는 하위 디렉터리를 만듦
+* `.git` 디렉터리에는 저장소에 필요한 뼈대 파일(skeleton)이 들어 있음
 
 
+#### 파일 버전 관리 시작: 파일을 추가하고 커밋
 
-### 기존 저장소를 Clone하기
+```shell
+$ git add *.c
+$ git add LICENSE
+$ git commit -m 'initial project version'
+```
 
-> #### 다른 프로젝트에 참여하려거나(contribute) Git 저장소를 복사하고 싶을 때 `git clone` 명령을 사용
-> * 서버에 있는 거의 모든 데이터를 복사
-> * 프로젝트 히스토리를 전부 받아옴
-> * 저장소의 데이터를 모두 가져와서 자동으로 가장 최신 버전을 Checkout
-> ```shell
-> $ git clone https://github.com/libgit2/libgit2
-> $ git clone https://github.com/libgit2/libgit2 mylibgit
-> ```
-> #### 다양한 프로토콜 지원
-> * `https://`
-> * `git://`
-> * SSH 프로토콜: `user@server:path/to/repo.git`
+
+
+### 2.2.2 기존 저장소를 Clone하기
+
+
+#### 다른 프로젝트에 참여하려거나(contribute) Git 저장소를 복사하고 싶을 때
+
+* `git clone` 사용
+  * 서버에 있는 거의 모든 데이터를 복사
+  * 프로젝트 히스토리를 전부 받아옴
+  * 저장소의 데이터를 모두 가져와서 자동으로 가장 최신 버전을 Checkout
+
+```shell
+$ git clone https://github.com/libgit2/libgit2
+```
+
+* `libgit2` 디렉터리를 만들고 그 안에 `.git` 디렉터리를 만듦
+* 저장소의 데이터를 모두 가져와서 자동으로 가장 최신 버전을 Checkout
+
+```shell
+$ git clone https://github.com/libgit2/libgit2 mylibgit
+```
+
+* `libgit2`이 아니라 다른 디렉터리 이름(`mylibgit`)으로 Clone
+
+
+#### 다양한 프로토콜 지원
+
+* `https://`
+* `git://`
+* SSH 프로토콜: `user@server:path/to/repo.git`
 
 
 
