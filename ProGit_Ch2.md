@@ -275,3 +275,158 @@ doc/**/*.pdf
 * Unstaged 상태인 변경 부분을 확인할 수 있다.
 * Staged 상태인 파일은 `git diff --cached` 옵션으로 확인한다. `--staged`와 `--cached`는 같은 옵션이다.
 * `git diff` 대신 `git difftool` 명령을 사용해서 emerge, vimdiff 같은 도구로 비교할 수 있다. `git difftool --tool-help` 명령은 사용 가능한 도구를 보여준다.
+
+
+
+### 2.2.7 변경사항 커밋하기
+
+수정한 것을 커밋하기 위해 Staging Area에 파일을 정리했다.  
+Unstage 상태의 파일은 커밋되지 않는다. Git은 생성하거나 수정하고 나서 `git add` 명령으로 추가하지 않은 파일은 커밋하지 않는다. 그 파일은 여전히 Modified 상태로 남아있다. 커밋하기 전에 `git status` 명령으로 모든 것이 Staged 상태인지 확인할 수 있다.
+
+```shell
+$ git commit                                            # 자동으로 커밋 메시지 생성
+$ git commit -v                                         # 편집기에 diff 메시지 추가
+$ git commit -m "Story 182: Fix benchmarks for speed"   # 인라인으로 메시지 첨부
+[master 463dc4f] Story 182: Fix benchmarks for speed
+ 2 files changed, 2 insertions(+)
+ create mode 100644 README
+```
+
+* `(master)` 브랜치에 커밋했고 체크섬은 `(463dc4f)`라고 알려준다.
+* 수정한 파일이 몇 개이고 삭제됐거나 추가된 라인이 몇 라인인지 알려준다.
+
+> Git은 Staging Area에 속한 스냅샷을 커밋한다. 수정은 했지만 아직 Staging Area에 넣지 않은 것은 다음에 커밋할 수 있다.  
+> 커밋할 때마다 프로젝트의 스냅샷을 기록하기 때문에 나중에 스냅샷끼리 비교하거나 예전 스냅샷으로 되돌릴 수 있다.
+
+
+
+### 2.2.8 Staging Area 생략하기
+
+`git commit` 명령을 실행할 때 `-a` 옵션을 추가하면 Tracked 상태의 파일을 자동으로 Staging Area에 넣는다. 그래서 `git add` 명령을 실행하는 수고를 덜 수 있다.
+
+```shell
+$ git commit -a -m 'added new benchmarks'
+[master 83e38c7] added new benchmarks
+ 1 file changed, 5 insertions(+), 0 deletions(-)
+```
+
+
+
+### 2.2.9 파일 삭제하기
+
+Git에서 파일을 제거하려면 `git rm` 명령으로 Tracked 상태의 파일을 삭제한 후에(정확하게는 Staging Area에서 삭제하는 것) 커밋해야 한다. 이 명령은 워킹 디렉터리에 있는 파일도 삭제하기 때문에 실제로 파일도 지워진다.
+
+Git 명령을 사용하지 않고 단순히 워킹 디렉터리에서 파일을  삭제하고 `git status` 명령으로 상태를 확인하면 Git은 현재 "Changes not staged for commit"(즉, Unstaged 상태)라고 표시해준다.
+
+```shell
+$ git rm grit.gemspec
+rm 'grit.gemspec'
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+     deleted:    grit.gemspec
+```
+
+`git rm` 명령을 실행하면 삭제한 파일은 Staged 상태가 된다.  
+커밋하면 파일은 삭제되고 Git은 이 파일을 더는 추적하지 않는다. 이미 파일을 수정했거나, 수정한 파일을 Index(Staging Area)에 추가했다면 `-f` 옵션을 주어 강제로 삭제해야 한다. 이 점은 실수로 데이터를 삭제하지 못하도록 하는 안전장치다. 커밋하지 않고 수정한 데이터는 Git으로 복구 할 수 없기 때문이다.
+
+Staging Area에서만 제거하고 워킹 디렉터리에 있는 파일은 지우지 않고 남겨둘 수 있다. 이것은 `.gitignore` 파일에 추가하는 것을 빼먹었거나, 대용량 로그 파일이나 컴파일된 파일인 `.a` 파일 같은 것을 실수로 추가했을 때 아주 유용하다. `--cached` 옵션을 사용하여 명령을 실행한다.
+
+```shell
+$ git rm --cached README
+```
+
+
+
+### 2.2.10 파일 이름 변경하기
+
+Git은 다른 VCS와는 달리 파일 이름의 변경이나 파일의 이동을 명시적으로 관리하지 않는다.
+
+```shell
+$ git mv README.md README
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    renamed:    README.md -> README
+```
+
+`git mv` 명령은 아래 명령어를 수행한 것과 완전 똑같다.
+
+```shell
+$ mv README.md README
+$ git rm README.md
+$ git add README
+```
+
+> `git mv`는 일종의 단축 명령어이다. Git의 `mv` 명령은 편리하게 명령을 세 번 실행해주는 것 뿐이다.
+
+
+
+
+## 2.3 커밋 히스토리 조회하기
+
+Git에는 히스토리를 조회하는 명령어인 `git log`가 있다.
+
+```shell
+$ git log
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Mon Mar 17 21:52:11 2008 -0700
+
+    changed the version number
+
+commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Sat Mar 15 16:40:33 2008 -0700
+```
+
+특별한 아규먼트 없이 `git log` 명령을 실행하면 저장소의 커밋 히스토리를 시간순으로 보여준다. 즉, 가장 최근의 커밋이 가장 먼저 나온다. 이어서 각 커밋의 SHA-1 체크섬, 저자 이름, 저자 이메일, 커밋한 날짜, 커밋 메시지를 보여준다.
+
+
+#### `-p`
+
+`-p`는 각 커밋의 diff 결과를 보여준다.
+
+
+#### `-2`
+
+`-2`는 최근 두 개의 결과만 보여주는 옵션이다.  
+이 옵션은 직접 diff를 실핸한 것과 같은 결과를 출력하기 때문에 동료가 무엇을 커밋했는지 리뷰하고 빨리 조회하는 데 유용하다.
+
+
+#### `--stat`
+
+`--stat` 옵션으로 각 커밋의 통계 정보를 조회할 수 있다.  
+어떤 파일이 수정됐는지, 얼마나 많은 파일이 변경됐는지, 또 얼마나 많은 라인을 추가하거나 삭제했는지 보여준다. 요약정보는 가장 뒤쪽에 보여준다.
+
+
+#### `--pretty`
+
+이 옵션을 통해 히스토리 내용을 보여줄 때 기본 형식 이외에 여러 가지 중 하나를 선택할 수 있다.
+
+* `oneline`: 각 커밋을 한 라인으로 보여준다. 많은 커밋을 한 번에 조회할 때 유용하다.
+* `short`, `full`, `fuller`: 정보를 조금씩 가감해서 보여준다.
+* `format`: 나만의 포맷으로 결과를 출력하고 싶을 때 사용한다. 결과를 다른 프로그램으로 파싱하고자 할 때 유용하다.
+
+  | 옵션 | 설명                              |
+  | ---- | --------------------------------- |
+  | %H   | 커밋 해시                         |
+  | %h   | 짧은 길이 커밋 해시               |
+  | %T   | 트리 해시                         |
+  | %t   | 짧은 길이 트리 해시               |
+  | %P   | 부모 해시                         |
+  | %p   | 짧은 길이 부모 해시               |
+  | %an  | 저자 이름                         |
+  | %ae  | 저자 메일                         |
+  | %ad  | 저자 시각(형식은 -date=옵션 참고) |
+  | %ar  | 저자 상대적 시각                  |
+  | %cn  | 커미터 이름                       |
+  | %ce  | 커미터 메일                       |
+  | %cd  | 커미터 시각                       |
+  | %cr  | 커미터 상대적 시가                |
+  | %s   | 요약                              |
+
