@@ -62,12 +62,17 @@ $ git clone https://github.com/libgit2/libgit2 mylibgit
 
 ## 2.2 수정하고 저장소에 저장하기
 
-> #### 워킹 디렉터리의 모든 파일은 크게 Tracked(관리대상임)와 Untracked(관리대상이 아님)로 나눔
-> * Tracked 파일: 이미 스냅샷에 포함돼 있던 파일, 처음 저장소를 Clone하면 모든 파일은 Tacked 이면서 Unmodified 상태(아무것도 수정하지 않았기 때문)
->   * Unmodified: 수정하지 않음
->   * Modified: 수정함
->   * Staged: 커밋으로 저장소에 기록할 상태
-> * Untracked 파일: 나머지 파일 모두, 워킹 디렉터리에 있는 파일 중 스냅샷에도 Staging Area에도 포함되지 않은 파일
+
+#### 워킹 디렉터리의 모든 파일은 크게 Tracked(관리대상임)와 Untracked(관리대상이 아님)로 나눔
+
+* Tracked 파일: 이미 스냅샷에 포함돼 있던 파일, 처음 저장소를 Clone하면 모든 파일은 Tacked 이면서 Unmodified 상태(아무것도 수정하지 않았기 때문)
+  * Unmodified: 수정하지 않음
+  * Modified: 수정함
+  * Staged: 커밋으로 저장소에 기록할 상태
+* Untracked 파일: 나머지 파일 모두, 워킹 디렉터리에 있는 파일 중 스냅샷에도 Staging Area에도 포함되지 않은 파일
+
+
+#### 파일의 라이프사이클
 
 ![그림 2-1 파일의 라이프사이클](https://raw.githubusercontent.com/esesem/ProGit/master/Figure/2-1.png)
 
@@ -75,77 +80,129 @@ $ git clone https://github.com/libgit2/libgit2 mylibgit
 
 
 
-### 파일의 상태 확인하기
+### 2.2.1 파일의 상태 확인하기
 
-> #### `git status` 명령 사용
-> ```shell
-> $ git status
-> On branch master
-> nothing to commit, working directory clean
-> ```
-> * 파일을 하나도 수정하지 않았다(Tracked나 Modified 상태인 파일이 없다는 의미).
-> * Untracked 파일은 아직 없어서 목록에 나타나지 않는다.
-> * 현재 작업 중인 브랜치를 알려주며 서버의 같은 브랜치로부터 진행된 작업이 없는 것을 나타낸다.
-> * 기본 브랜치가 master이기 때문에 현재 브랜치 이름이 "master"로 나온다.
->
-> #### 새로 만든 파일
-> ```shell
-> $ echo 'My Project' > README
-> $ git status
-> On branch master
->
-> No commits yet
->
-> Untracked files:
->   (use "git add <file>..." to include in what will be committed)
->        README
->
-> nothing added to commit but untracked files present (use "git add" to track)
-> ```
-> * `README` 파일이 Untracked 상태라는 것을 말한다.
+#### `git status` 명령 사용
+
+```shell
+$ git status
+On branch master
+nothing to commit, working directory clean
+```
+
+* 파일을 하나도 수정하지 않았다(Tracked나 Modified 상태인 파일이 없다는 의미).
+* Untracked 파일은 아직 없어서 목록에 나타나지 않는다.
+* 현재 작업 중인 브랜치를 알려주며 서버의 같은 브랜치로부터 진행된 작업이 없는 것을 나타낸다.
+* 기본 브랜치가 master이기 때문에 현재 브랜치 이름이 "master"로 나온다.
+
+
+#### 새로 만든 파일
+
+```shell
+$ echo 'My Project' > README
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+    README
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+
+* `README` 파일이 Untracked 상태라는 것을 말한다.
 
 > Git은 Untracked 파일을 아직 스냅샷(커밋)에 넣어지지 않은 파일이라고 본다. 파일이 Tracked 상태가 되기 전까지는 Git은 절대 그 파일을 커밋하지 않는다. 일하면서 생성하는 바이너리 파일 같은 것을 커밋하는 실수는 하지 않게 된다.
 
 
 
-### 파일을 새로 추적하기
+### 2.2.2 파일을 새로 추적하기
 
-<`git add` 명령 사용>
+
+#### `git add` 명령 사용
 
 ```shell
 $ git add README
 $ git status
 On branch master
-
-No commits yet
-
 Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
-        new file:   README
+
+    new file:   README
 ```
 
+* `README` 파일을 추적한다.
 * `README` 파일이 Tracked 상태이면서 커밋에 추가될 Staged 상태라는 것을 확인할 수 있다.
 
-> "Changes to be commited"에 들어 있는 파일은 Staged 상태라는 것을 의미한다. 커밋하면 `git add`를 실행한 시점의 파일이 커밋되어 저장소 히스토리에 남는다.
-
+> "Changes to be commited"에 들어 있는 파일은 Staged 상태라는 것을 의미한다. 커밋하면 `git add`를 실행한 시점의 파일이 커밋되어 저장소 히스토리에 남는다.  
 > `git add` 명령은 파일 또는 디렉터리의 경로를 아규먼트로 받는다. 디렉터리면 아래에 있는 모든 파일들까지 재귀적으로 추가한다.
 
 
 
-### Modified 상태의 파일을 Stage하기
+### 2.2.3 Modified 상태의 파일을 Stage하기
 
-"CONTRIBUTING.md"라는 파일을 수정하고 나서 `git status` 명령을 실행하면 결과는 아래와 같다.
+
+#### 파일을 수정하고 나서 `git status` 명령을 실행
 
 ```shell
+$ git status
 On branch master
-
-No commits yet
-
 Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
-        new file:   README
 
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-        CONTRIBUTING.md
+    new file:   README
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+    modified:   CONTRIBUTING.md
 ```
+
+* `CONTRIBUTING.md` 파일은 Tracked 상태이지만 아직 Staged 상태는 아니다.
+* Staged 상태로 만들려면 `git add` 명령을 실행해야 한다.
+
+> `git add` 명령은 파일을 새로 추적할 때도 사용하고 수정한 파일을 Staged 상태로 만들 때도 사용한다. Merge할 때 충돌 난 상태의 파일을 Resolve 상태로 만들 때도 사용한다.  
+> add의 의미는 프로젝트에 파일을 추가한다기보다는 다음 커밋에 추가한다고 받아들이는 게 좋다.
+
+
+#### 파일을 Staged 상태로 만들고 `git status` 명령으로 결과를 확인
+
+```shell
+$ git add CONTRIBUTING.md
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    new file:   README
+    modified:   CONTRIBUTING.md
+```
+
+* 두 파일 모두 Staged 상태이므로 다음 커밋에 포함된다.
+
+
+#### 아직 더 수정해야 한다는 것을 알게 되어 바로 커밋하지 못하는 상황
+
+```shell
+$ vim CONTRIBUTING
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    new file:   README
+    modified:   CONTRIBUTING.md
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+    modified:   CONTRIBUTING.md
+```
+
+* `CONTRIBUTING.md`가 Staged 상태이면서 동시에 Unstaged 상태로 나온다.
+
+> `git add` 명령을 실행하면 Git은 파일을 바로 Staged 상태로 만든다.  
+> 이 시점에서 커밋을 하면 `git commit` 명령을 실행하는 시점의 버전이 커밋되는 것이 아니라 마지막으로 `git add` 명령을 실행했을 때의 버전이 커밋된다.  
+> `git add` 명령을 실행한 후에 또 파일을 수정하면 `git add` 명령을 다시 실행해서 최신 버전을 Staged 상태로 만들어야 한다.
