@@ -206,3 +206,72 @@ Changes not staged for commit:
 > `git add` 명령을 실행하면 Git은 파일을 바로 Staged 상태로 만든다.  
 > 이 시점에서 커밋을 하면 `git commit` 명령을 실행하는 시점의 버전이 커밋되는 것이 아니라 마지막으로 `git add` 명령을 실행했을 때의 버전이 커밋된다.  
 > `git add` 명령을 실행한 후에 또 파일을 수정하면 `git add` 명령을 다시 실행해서 최신 버전을 Staged 상태로 만들어야 한다.
+
+
+
+### 2.2.4 파일 상태를 짤막하게 확인하기
+
+`git status -s` 또는 `git status --short`처럼 옵션을 주면 현재 변경한 상태를 짤막하게 보여준다.
+
+```shell
+$ git status -s
+ M README
+MM Rakefile
+A  lib/git.rb
+M  lib/simplegit.rb
+?? LICENSE.txt
+```
+
+* `??`: 아직 추적하지 않는 새 파일
+* `A`: Staged 상태로 추가한 파일 중 새로 생성한 파일
+* `M`: 수정한 파일
+* `MM`: Staged 상태로 추가한 후 또 내용을 변경해서 Staged이면서 Unstaged 상태인 파일
+
+
+
+### 2.2.5 파일 무시하기
+
+Git이 관리할 필요가 없는 파일(로그 파일이나 빌드 시스템이 자동으로 생성한 파일)을 무시하려면 `.gitignore` 파일을 만들고 그 안에 무시할 파일 패턴을 적는다.
+
+* 아무것도 없는 라인이나, `#`로 시작하는 라인은 무시한다.
+* 표준 Glob 패턴을 사용한다.
+* 슬래시(`/`)로 시작하면 하위 디렉터리에 적용되지(recursivity) 않는다.
+* 디렉터리는 슬래시(`/`)를 끝에 사용하는 것으로 표현한다.
+* 느낌표(`!`)로 시작하는 패턴의 파일은 무시하지 않는다.
+
+```shell
+# 확장자가 .a인 파일 무시
+*.a
+
+# 윗 라인에서 확장자가 .a인 파일은 무시하게 했지만 lib.a는 무시하지 않음
+!lib.a
+
+# 현재 디렉터리에 있는 TODO 파일은 무시하고 subdir/TODO처럼 하위 디렉터리에 있는 파일은 무시하지 않음
+/TODO
+
+# build/ 디렉터리에 있는 모든 파일은 무시
+build/
+
+# doc/notes.txt 파일은 무시하고 doc/server/arch.txt 파일은 무시하지 않음
+doc/*.txt
+
+# doc 디렉터리 아래의 모든 .pdf 파일을 무시
+doc/**/*.pdf
+```
+
+* [`.gitignore` 예제](https://github.com/github/gitignore)
+
+
+
+### 2.2.6 Staged와 Unstaged 상태의 변경 내용을 보기
+
+어떤 내용이 변경됐는지 살펴보려면 `git diff` 명령을 사용해야 한다.
+
+* 수정했지만 아직 staged 상태가 아닌 파일을 비교해 볼 수 있다.
+* 워킹 디렉터리에 있는 것과 Staging Area에 있는 것을 비교한다. 그래서 수정하고 아직 Stage하지 않은 것을 보여준다.
+* 커밋하려고 Staging Area에 넣은 파일의 변경 부분을 보고 싶으면 `git diff --staged` 옵션을 사용한다. 이 명령은 저장소에 커밋한 것과 Staging Area에 있는 것을 비교한다.
+* `git diff` 명령은 마지막으로 커밋한 후에 수정한 것들 전부를 보여주지 않는다. Unstaged 상태인 것들만 보여준다. 수정한 파일을 모두 Staging Area에 넣었다면 `git diff` 명령은 아무것도 출력하지 않는다.
+* Stage한 후에 다시 수정해도 `git diff` 명령을 사용할 수 있다. 이때는 Staged 상태인 것과 Unstaged 상태인 것을 비교한다.
+* Unstaged 상태인 변경 부분을 확인할 수 있다.
+* Staged 상태인 파일은 `git diff --cached` 옵션으로 확인한다. `--staged`와 `--cached`는 같은 옵션이다.
+* `git diff` 대신 `git difftool` 명령을 사용해서 emerge, vimdiff 같은 도구로 비교할 수 있다. `git difftool --tool-help` 명령은 사용 가능한 도구를 보여준다.
