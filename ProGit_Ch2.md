@@ -560,6 +560,7 @@ pb      https://github.com/paulboone/ticgit (push)
 
 ### 2.5.3 리모트 저장소를 Pull하거나 Fetch하기
 
+
 #### `git fetch`
 
 ```shell
@@ -570,6 +571,7 @@ $ git fetch [remote-name]
 * 리모트 저장소의 모든 브랜치를 로컬에서 접근할 수 있어서 언제든지 Merge를 하거나 내용을 살펴볼 수 있다.
 * 저장소를 Clone하면 명령은 자동으로 리모트 저장소를 "origin"이라는 이름으로 추가한다. 그래서 나중에 `git fetch origin`을 실행하면 Clone한 이후에 수정된 것을 모두 가져온다.
 * `git fetch` 명령은 리모트 저장소의 데이터를 모두 로컬로 가져오지만, 자동으로 Merge하지 않는다. 그래서 로컬에서 하던 작업을 정리하고 나서 수동으로 Merge해야 한다.
+
 
 #### `git pull`
 
@@ -592,3 +594,7 @@ $ git push origin master
 
 
 ### 2.5.5 리모트 저장소 살펴보기
+
+`git remote show [리모트 저장소 이름]` 명령으로 리모트 저장소의 구체적인 정보를 확인할 수 있다.
+
+`
