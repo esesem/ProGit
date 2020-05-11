@@ -597,4 +597,234 @@ $ git push origin master
 
 `git remote show [리모트 저장소 이름]` 명령으로 리모트 저장소의 구체적인 정보를 확인할 수 있다.
 
-`
+```shell
+$ git remote show origin
+* remote origin
+  Fetch URL: https://github.com/schacon/ticgit
+  Push  URL: https://github.com/schacon/ticgit
+  HEAD branch: master
+  Remote branches:
+    master                               tracked
+    dev-branch                           tracked
+  Local branch configured for 'git pull'
+    master merges with remote master
+  Local ref configured for 'git push'
+    master pushes to master (up to date)
+```
+
+* 리모트 저장소의 URL과 추적하는 브랜치를 출력한다.
+* `git pull` 명령을 실행할 때 master 브랜치와 Merge할 브랜치가 무엇인지 보여 준다.
+* `git pull` 명령은 리모트 저장소 브랜치의 데이터를 모두 가져오고 나서 자동으로 Merge할 것이다. 그리고 가져온 모든 리모트 저장소 정보도 출력한다.
+* 브랜치명을 생략하고 `git push` 명령을 실행할 때 어떤 브랜치가 어떤 브랜치로 Push되는지 보여준다.
+* 아직 로컬로 가져오지 않은 리모트 저장소의 브랜치는 어떤 것들이 있는지 보여준다.
+* 서버에서는 삭제됐지만 아직 가지고 있는 브랜치는 어떤 것인지 보여준다.
+* `git pull` 명령을 실행했을 때 자동으로 Merge할 브랜치는 어떤 것이 있는지 보여준다.
+
+
+
+### 2.5.6 리모트 저장소 이름을 바꾸거나 리모트 저장소를 삭제하기
+
+`git remote rename` 명령으로 리모트 저장소의 이름을 변경할 수 있다.
+
+```shell
+$ git remote rename pb paul
+$ git remote
+origin
+paul
+```
+
+* 리모트 저장소의 브랜치 이름도 바뀐다.
+* `pb/master`로 리모트 저장소 브랜치를 사용했으면 이제는 `paul/master`라고 사용해야 한다.
+
+리모트 저장소를 삭제해야 한다면 `git remote rm` 명령을 사용한다.
+
+```shell
+$ git remote rm paul
+$ git remote
+origin
+```
+
+
+
+
+## 2.6 태그
+
+보통 릴리스할 때 사용한다.
+
+
+
+### 2.6.1 태그 조회하기
+
+`git tag` 명령으로 이미 만들어진 태그가 있는지 확인할 수 있다.
+
+```shell
+$ git tag
+v0.1
+v1.3
+```
+
+* 알파벳 순서로 태그를 보여준다.
+
+검색 패턴을 사용하여 태그를 검색할 수 있다.
+
+```shell
+$ git tag -l 'v1.8.5*'
+v1.8.5
+v1.8.5-rc0
+v1.8.5-rc1
+v1.8.5-rc2
+v1.8.5-rc3
+v1.8.5.1
+v1.8.5.2
+v1.8.5.3
+v1.8.5.4
+v1.8.5.5
+```
+
+
+
+### 2.6.2 태그 붙이기
+
+* Git의 태그
+  * Lightweight 태그  
+  브랜치와 비슷한데 브랜치처럼 가리키는 지점을 최신 커밋으로 이동시키지 않는다. 단순히 특정 커밋에 대한 포인터일 뿐이다.
+  * Annotated 태그  
+  Git 데이터베이스에 태그를 만든 사람의 이름, 이메일과 태그를 만든 날짜, 그리고 태그 메시지도 저장한다. GPG(GNU Privacy Guard)로 서명할 수도 있다. 이 모든 정보를 저장해둬야 할 때만 Annotaged 태그를 추천한다. 다른 정보를 저장하지 않는 단순한 태그가 필요하다면 Lightweight 태그를 사용하는 것이 좋다.
+
+
+
+### 2.6.3 Annotated 태그
+
+`tag` 명령을 실행할 때 `-a` 옵션을 추가한다. `-m` 옵션으로 태그를 저장할 때 메시지를 함께 저장시킬 수 있다.
+
+```shell
+$ git tag -a v1.4 -m 'my version 1.4'
+$ git tag
+v0.1
+v1.3
+v1.4
+```
+
+`git show` 명령으로 태그 정보와 커밋 정보를 모두 확인할 수 있다.
+
+```shell
+$ git show v1.4
+tag v1.4
+Tagger: Ben Straub <ben@straub.cc>
+Date:   Sat May 3 20:19:12 2014 -0700
+
+my version 1.4
+
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Mon Mar 17 21:52:11 2008 -0700
+
+    changed the version number
+```
+
+* 커밋 정보를 보여주기 전에 먼저 태그를 만든 사람이 누구인지, 언제 태그를 만들었는지, 그리고 태그 메시지가 무엇인지 보여준다.
+
+
+
+### 2.6.4 Lightweight 태그
+
+Lightweight 태그는 기본적으로 파일에 체크섬을 저장하는 것뿐이다. 다른 정보는 저장하지 않는다. `-a`, `-s`, `-m` 옵션을 사용하지 않는다.
+
+```shell
+$ git tag v1.4-lw
+$ git tag
+v0.1
+v1.3
+v1.4
+v1.4-lw
+v1.5
+
+$ git show v1.4-lw
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com
+Date:   Mon Mar 17 21:52:11 2008 -0700
+
+    changed the version number
+```
+
+
+
+### 2.6.5 나중에 태그하기
+
+특정 커밋에 태그하기 위해서 명령의 끝에 커밋 체크섬을 명시한다(긴 체크섬을 전부 사용할 필요는 없다).
+
+```shell
+$ git tag -a v1.2 9fceb02
+$ git tag
+v0.1
+v1.2
+v1.3
+v1.4
+v1.4-lw
+v1.5
+
+$ git show v1.2
+tag v1.2
+Tagger: Scott Chacon <schacon@gee-mail.com>
+Date:   Mon Feb 9 15:32:16 2009 -0800
+
+version 1.2
+commit 9fceb02d0ae598e95dc970b74767f19372d61af8
+Author: Magnus Chacon <mchacon@gee-mail.com>
+Date:   Sun Apr 27 20:43:35 2008 -0700
+
+    updated rakefile
+...
+```
+
+
+
+### 2.6.6 태그 공유하기
+
+`git push` 명령은 자동으로 리모트 서버에 태그를 전송하지 않는다. 태그를 만들었으면 서버에 별도로 Push해야 한다. 브랜치를 공유하는 것과 같은 방법으로 할 수 있다. `git push origin [태그 이름]`을 실행한다.
+
+```shell
+$ git push origin v1.5
+```
+
+한번에 태그를 여러 개 Push하고 싶으면 `--tags` 옵션을 추가하여 `git push` 명령을 실행한다. 이 명령으로 리모트 서버에 없는 태그를 모두 전송할 수 있다.
+
+```shell
+$ git push origin --tags
+```
+
+* 이제 누군가 저장소에서 Clone하거나 Pull을 하면 모든 태그 정보도 함께 전송된다.
+
+
+
+### 2.6.7 태그를 Checkout하기
+
+태그는 브랜치와는 달리 가리키는 커밋을 바꿀 수 없는 이름이기 때문에 Checkout해서 사용할 수 없다. 태그가 가리키는 특정 커밋 기반의 브랜치를 만들어 작업하려면 아래와 같이 새로 브랜치를 생성한다.
+
+```shell
+git checkout -b version2 v2.0.0
+Switched to a new branch 'version2'
+```
+
+* 이렇게 브랜치를 만든 후에 `version2` 브랜치에 커밋하면 브랜치는 업데이트 된다.
+* 하지만 `v2.0.0` 태그는 가리키는 커밋이 변하지 않았으므로 두 내용이 가리키는 커밋이 다르다.
+
+
+
+
+## 2.7 Git Alias
+
+Git의 명령을 전부 입력하는 것이 귀찮다면 `git config`를 사용하여 각 명령의 Alias를 쉽게 만들 수 있다. 그리고 Git의 명령어뿐만 아니라 외부 명령어도 실행할 수 있다. `!`를 앞에 추가하면 외부 명령을 실행한다.
+
+```shell
+$ git config --global alias.co checkout
+$ git config --global alias.br branch
+$ git config --global alias.ci commit
+$ git config --global alias.st status
+$ git config --global alias.unstage 'reset HEAD --'
+$ git config --global alias.last 'log -1 HEAD'
+$ git config --global alias.visual '!gitk'
+```
+
+* `git commit` 대신 `git ci`만으로도 커밋할 수 있다.
+* `git visual`이라고 입력하면 `gitk`가 실행된다.
