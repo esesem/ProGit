@@ -1,3 +1,8 @@
+시작하기
+========
+
+<br>
+
 # 1.1 버전 관리란?
 
 ### VCS(Version Control System, 버전 관리 시스템)
