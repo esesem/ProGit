@@ -74,7 +74,7 @@
 
 # 1.2 짧게 보는 Git의 역사
 
-* 리눅스 커널은(1991-2002) Patch와 단순 압축 파일로만 관리.
+* 리눅스 커널은(1991-2002) Patch와 단순 압축 파일로만 관리
 * 2002년 드디어 BitKeeper라고 불리는 상용 DVCS를 사용하기 시작
 * 2005년 BitKeeper를 무료로 사용하지 못하게 됨
 * Git 탄생
@@ -191,7 +191,7 @@
 
 ## 리눅스에 설치
 
-```shell
+```
 $ sudo yum install git
 $ sudo apt-get install git
 ```
@@ -231,7 +231,7 @@ $ sudo apt-get install git
 * 한번 커밋한 후에는 정보를 변경할 수 없다.
 * 프로젝트마다 다른 이름과 이메일 주소를 사용하고 싶으면 `--global` 옵션을 빼고 실행한다.
 
-```shell
+```
 $ git config --global user.name "John Doe"
 $ git config --global user.email "johndoe@example.com"
 ```
@@ -240,7 +240,7 @@ $ git config --global user.email "johndoe@example.com"
 
 ## 편집기
 
-```shell
+```
 $ git config --global core.editor emacs
 ```
 
@@ -248,7 +248,7 @@ $ git config --global core.editor emacs
 
 ## 설정 확인
 
-```shell
+```
 $ git config --list
 user.name=John Doe
 user.email=johndoe@example.com
@@ -261,7 +261,7 @@ color.diff=auto
 
 ### 특정 Key에 대해 어떤 값을 사용하는지 확인
 
-```shell
+```
 $ git config user.name
 John Doe
 ```
@@ -270,7 +270,7 @@ John Doe
 
 # 1.7 도움말 보기
 
-```shell
+```
 $ git help <verb>
 $ git <verb> --help
 $ man git-<verb>
